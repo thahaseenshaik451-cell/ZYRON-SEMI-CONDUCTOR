@@ -7,8 +7,58 @@ import { Label } from '@/components/ui/label';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { useFirestore, addDocumentNonBlocking } from '@/firebase';
+import { collection, serverTimestamp } from 'firebase/firestore';
+import { useToast } from '@/hooks/use-toast';
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+  email: z.string().email({ message: 'Please enter a valid email.' }),
+  subject: z.string().min(2, { message: 'Subject must be at least 2 characters.' }),
+  message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 function ContactSection() {
+  const firestore = useFirestore();
+  const { toast } = useToast();
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    if (!firestore) return;
+    const submissionsCollection = collection(firestore, 'contact_form_submissions');
+    addDocumentNonBlocking(submissionsCollection, {
+      ...data,
+      submissionDate: serverTimestamp(),
+    });
+    toast({
+        title: 'Message Sent!',
+        description: 'Thank you for contacting us. We will get back to you shortly.',
+    });
+    form.reset();
+  };
+
+
     return (
       <section id="contact" className="py-16 md:py-24 pt-32 md:pt-40 bg-card">
         <div className="container mx-auto px-4 md:px-6">
@@ -68,33 +118,71 @@ function ContactSection() {
                 </div>
               </div>
             </div>
-            <form className="md:col-span-3 space-y-4">
+            <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="md:col-span-3 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Your Name" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="your@email.com" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" placeholder="Project Inquiry" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea
-                  id="message"
-                  placeholder="Tell us about your project..."
-                  rows={5}
+                 <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your Name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                 <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="your@email.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
-              <Button type="submit" className="w-full" size="lg">
-                Send Message
+               <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Subject</FormLabel>
+                      <FormControl>
+                         <Input placeholder="Project Inquiry" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Message</FormLabel>
+                      <FormControl>
+                        <Textarea
+                            placeholder="Tell us about your project..."
+                            rows={5}
+                            {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              <Button type="submit" className="w-full" size="lg" disabled={form.formState.isSubmitting}>
+                 {form.formState.isSubmitting ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
+            </Form>
           </div>
         </div>
       </section>

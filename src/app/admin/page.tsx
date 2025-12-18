@@ -3,6 +3,7 @@
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useMemo } from 'react';
+import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import { getAuth, signOut } from 'firebase/auth';
@@ -23,6 +24,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -31,6 +33,16 @@ import { useFirestore } from '@/firebase';
 import { collection, doc } from 'firebase/firestore';
 import { addDocumentNonBlocking, updateDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { useMemoFirebase } from '@/firebase/provider';
+import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
+import {
+  Inbox,
+  LayoutDashboard,
+  Settings,
+  LucideIcon
+} from 'lucide-react';
+import InboxPage from './inbox/page';
+
 
 type Service = {
   id: string;
@@ -38,6 +50,12 @@ type Service = {
   description: string;
   icon: string;
 };
+
+const navLinks = [
+  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/inbox', label: 'Inbox', icon: Inbox },
+  { href: '/admin/settings', label: 'Settings', icon: Settings },
+];
 
 function AdminHeader() {
   const auth = getAuth();
@@ -59,6 +77,25 @@ function AdminHeader() {
       </div>
     </header>
   );
+}
+
+function AdminNav() {
+    const pathname = usePathname();
+    return (
+        <nav className="flex flex-col gap-2">
+            {navLinks.map(link => {
+                const Icon = link.icon;
+                const isActive = pathname === link.href;
+                return (
+                <Link key={link.href} href={link.href}>
+                    <Button variant={isActive ? "secondary" : "ghost"} className="w-full justify-start">
+                        <Icon className="mr-2 h-4 w-4" />
+                        {link.label}
+                    </Button>
+                </Link>
+            )})}
+        </nav>
+    );
 }
 
 function ServiceForm({ service, onSave, onOpenChange }: { service?: Service | null; onSave: (serviceData: Omit<Service, 'id'>) => void; onOpenChange: (open: boolean) => void; }) {
@@ -183,6 +220,24 @@ function ServicesManager() {
   );
 }
 
+function AdminContent() {
+    const pathname = usePathname();
+
+    if (pathname === '/admin/inbox') {
+        return <InboxPage />;
+    }
+    
+    if (pathname === '/admin') {
+        return <ServicesManager />;
+    }
+
+    if(pathname === '/admin/settings') {
+        return <div>Settings Page</div>
+    }
+
+    return <div>Page not found</div>
+}
+
 export default function AdminPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
@@ -202,11 +257,17 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-dvh bg-background text-foreground">
+    <div className="flex flex-col min-h-dvh bg-muted/40 text-foreground">
       <AdminHeader />
       <main className="flex-1 container mx-auto px-4 md:px-6 py-8">
-        <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
-        <ServicesManager />
+        <div className="grid md:grid-cols-[240px_1fr] gap-8">
+            <aside>
+                <AdminNav />
+            </aside>
+            <div>
+                <AdminContent />
+            </div>
+        </div>
       </main>
     </div>
   );
