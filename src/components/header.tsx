@@ -7,10 +7,12 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { usePathname } from 'next/navigation';
 
 export function Header() {
   const [hasScrolled, setHasScrolled] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,28 +24,35 @@ export function Header() {
   }, []);
 
   const navLinks = [
-    { href: '#services', label: 'Services' },
-    { href: '#about', label: 'About' },
-    { href: '#contact', label: 'Contact' },
+    { href: '/', label: 'Home' },
+    { href: '/about', label: 'About' },
+    { href: '/services', label: 'Services' },
+    { href: '/features', label: 'Features' },
+    { href: '/contact', label: 'Contact' },
   ];
+
+  const headerIsTransparent = pathname === '/' && !hasScrolled;
 
   return (
     <header className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      hasScrolled ? "bg-card/95 shadow-md backdrop-blur-sm" : "bg-transparent"
+      headerIsTransparent ? "bg-transparent" : "bg-card/95 shadow-md backdrop-blur-sm"
     )}>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Logo />
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map(link => (
-            <Link key={link.href} href={link.href} className="text-foreground/80 hover:text-foreground transition-colors">
+            <Link key={link.href} href={link.href} className={cn(
+              "transition-colors",
+              pathname === link.href ? "text-primary font-semibold" : "text-foreground/80 hover:text-foreground"
+              )}>
               {link.label}
             </Link>
           ))}
         </nav>
         <div className="hidden md:block">
           <Button asChild>
-            <Link href="#contact">Get Started</Link>
+            <Link href="/contact">Get Started</Link>
           </Button>
         </div>
         <div className="md:hidden">
@@ -64,13 +73,16 @@ export function Header() {
                 </div>
                 <nav className="flex flex-col gap-6 text-lg font-medium">
                   {navLinks.map(link => (
-                    <Link key={link.href} href={link.href} className="text-foreground/80 hover:text-foreground transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    <Link key={link.href} href={link.href} className={cn(
+                        "transition-colors",
+                        pathname === link.href ? "text-primary font-semibold" : "text-foreground/80 hover:text-foreground"
+                      )} onClick={() => setMobileMenuOpen(false)}>
                       {link.label}
                     </Link>
                   ))}
                 </nav>
                 <Button asChild className="mt-auto">
-                  <Link href="#contact" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
+                  <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
                 </Button>
               </div>
             </SheetContent>

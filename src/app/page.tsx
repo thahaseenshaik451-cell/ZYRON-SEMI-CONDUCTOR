@@ -2,37 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  Cpu,
-  Binary,
-  ShieldCheck,
-  Layers3,
-  Cog,
-  Mail,
-  Phone,
-  MapPin,
-  Check,
-  type LucideIcon,
-  HelpCircle,
-} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { useCollection, useFirestore } from '@/firebase';
-import { collection } from 'firebase/firestore';
-import { useMemoFirebase } from '@/firebase/provider';
-import * as LucideIcons from 'lucide-react';
-
 
 function HeroSection() {
   const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
@@ -59,241 +32,12 @@ function HeroSection() {
           </p>
           <div className="flex gap-4 justify-center">
             <Button size="lg" asChild>
-              <Link href="#services">Our Chip Design Services</Link>
+              <Link href="/services">Our Chip Design Services</Link>
             </Button>
             <Button size="lg" variant="secondary" asChild>
-              <Link href="#contact">Contact Us</Link>
+              <Link href="/contact">Contact Us</Link>
             </Button>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-type Service = {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-};
-
-
-const iconMap: { [key: string]: LucideIcon } = {
-  Cpu,
-  Binary,
-  ShieldCheck,
-  Layers3,
-  Cog,
-  Check,
-  ...LucideIcons
-};
-
-const getIcon = (iconName: string): LucideIcon => {
-    const Icon = iconMap[iconName];
-    return Icon || HelpCircle;
-};
-
-function ServicesSection() {
-  const firestore = useFirestore();
-  const servicesCollection = useMemoFirebase(() => collection(firestore, 'services'), [firestore]);
-  const { data: services, isLoading } = useCollection<Omit<Service, 'id'>>(servicesCollection);
-  
-  return (
-    <section id="services" className="py-16 md:py-24 bg-card">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
-            End-to-End Semiconductor Design Services
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            From concept to silicon, we provide cost-efficient custom chip development and scalable IC design for modern applications. Our services are tailored for startups and enterprises alike.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {isLoading && Array.from({ length: 6 }).map((_, index) => (
-             <Card key={index} className="flex flex-col text-center items-center p-8 bg-background/50 md:bg-card">
-                <div className="mb-4 bg-primary/10 p-4 rounded-full">
-                    <div className="h-8 w-8 bg-gray-300 rounded-full animate-pulse" />
-                </div>
-                <CardHeader className="p-0">
-                    <div className="h-6 w-48 bg-gray-300 rounded animate-pulse" />
-                </CardHeader>
-                <CardContent className="p-0 mt-2 flex-grow">
-                    <div className="h-4 w-full bg-gray-300 rounded animate-pulse mt-2" />
-                    <div className="h-4 w-3/4 bg-gray-300 rounded animate-pulse mt-2" />
-                </CardContent>
-             </Card>
-        ))}
-          {services?.map((service) => {
-            const Icon = getIcon(service.icon);
-            return (
-                <Card
-                key={service.id}
-                className="flex flex-col text-center items-center p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 bg-background/50 md:bg-card"
-                >
-                <div className="mb-4 bg-primary/10 p-4 rounded-full">
-                    <Icon className="h-8 w-8 text-primary" />
-                </div>
-                <CardHeader className="p-0">
-                    <CardTitle className="font-headline text-xl">
-                    {service.name}
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="p-0 mt-2 flex-grow">
-                    <p className="text-muted-foreground">{service.description}</p>
-                </CardContent>
-                </Card>
-            )
-        })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function AboutSection() {
-  const capabilities = [
-    'Next-Generation Silicon Solutions',
-    'AI-Enabled Silicon Development',
-    'Low-Power Semiconductor Solutions',
-    'High-Performance Chip Development',
-    'Advanced Verification Methodologies',
-  ];
-
-  return (
-    <section id="about" className="py-16 md:py-24">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="animate-in fade-in slide-in-from-left-8 duration-1000">
-            <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
-              A Customer-Focused Chip Design Company
-            </h2>
-            <div className="mt-6 space-y-6 text-muted-foreground">
-              <div>
-                <h3 className="font-headline text-xl font-semibold text-foreground mb-2">
-                  Our Mission
-                </h3>
-                <p>
-                  To empower our clients with industry-standard semiconductor services that push the boundaries of technology, driving progress and creating a smarter, more connected world through precision-driven chip engineering.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-headline text-xl font-semibold text-foreground mb-2">
-                  Our Vision
-                </h3>
-                <p>
-                  To be the world&apos;s most trusted partner for professional silicon design and validation, recognized for our unwavering commitment to innovation and quality for startups and enterprises.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-card p-8 rounded-lg shadow-sm animate-in fade-in slide-in-from-right-8 duration-1000">
-            <h3 className="font-headline text-2xl font-bold text-foreground mb-4">
-              Core Capabilities
-            </h3>
-            <ul className="space-y-3">
-              {capabilities.map((cap, index) => (
-                <li key={index} className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-accent flex-shrink-0" />
-                  <span className="text-foreground/90">{cap}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ContactSection() {
-  return (
-    <section id="contact" className="py-16 md:py-24 bg-card">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
-            Contact Our Indian Chip Design Services Provider
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            As a global semiconductor engineering firm, we'd love to hear from you. Have a project in mind or want to learn more about our Zyron IC engineering?
-          </p>
-        </div>
-        <div className="grid md:grid-cols-5 gap-12 max-w-6xl mx-auto">
-          <div className="md:col-span-2 space-y-8">
-            <div className="flex items-start gap-4">
-              <div className="bg-primary/10 p-3 rounded-full mt-1">
-                <Mail className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Email</h3>
-                <p className="text-muted-foreground">
-                  Reach out for project inquiries.
-                </p>
-                <a
-                  href="mailto:contact@zyron.com"
-                  className="text-primary font-medium hover:underline"
-                >
-                  contact@zyron.com
-                </a>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="bg-primary/10 p-3 rounded-full mt-1">
-                <Phone className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Phone</h3>
-                <p className="text-muted-foreground">
-                  Discuss your needs with an expert.
-                </p>
-                <a
-                  href="tel:+1234567890"
-                  className="text-primary font-medium hover:underline"
-                >
-                  +1 (234) 567-890
-                </a>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="bg-primary/10 p-3 rounded-full mt-1">
-                <MapPin className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Office</h3>
-                <p className="text-muted-foreground">
-                  123 Innovation Drive, Bangalore, India
-                </p>
-              </div>
-            </div>
-          </div>
-          <form className="md:col-span-3 space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Your Name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="your@email.com" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="subject">Subject</Label>
-              <Input id="subject" placeholder="Project Inquiry" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="message">Message</Label>
-              <Textarea
-                id="message"
-                placeholder="Tell us about your project..."
-                rows={5}
-              />
-            </div>
-            <Button type="submit" className="w-full" size="lg">
-              Send Message
-            </Button>
-          </form>
         </div>
       </div>
     </section>
@@ -306,9 +50,6 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <HeroSection />
-        <ServicesSection />
-        <AboutSection />
-        <ContactSection />
       </main>
       <Footer />
     </div>
