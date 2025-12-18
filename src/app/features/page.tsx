@@ -3,7 +3,9 @@
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check } from 'lucide-react';
+import { Check, Zap, Gauge, Scaling, BrainCircuit } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 function FeaturesSection() {
     const features = [
@@ -66,6 +68,65 @@ function FeaturesSection() {
     );
 }
 
+function TechSpotlightSection() {
+    const techItems = [
+      { name: 'High-Speed Interfaces', icon: Zap, description: 'Expertise in PCIe, DDR, and Ethernet for rapid data transfer.' },
+      { name: 'Advanced Process Nodes', icon: Gauge, description: 'Proven experience in 7nm, 5nm, and below for maximum performance.' },
+      { name: 'Scalable SoC Architectures', icon: Scaling, description: 'Designing flexible SoCs that grow with your product roadmap.' },
+      { name: 'AI/ML Acceleration', icon: BrainCircuit, description: 'Custom hardware accelerators for efficient AI inference and training.' },
+    ];
+  
+    return (
+      <section id="tech-spotlight" className="py-16 md:py-24 bg-card">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
+              Technology Spotlight
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              We harness industry-leading technologies to deliver superior silicon solutions.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {techItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="text-center p-6 rounded-lg hover:bg-background/50">
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-primary/10 p-4 rounded-full">
+                      <Icon className="h-8 w-8 text-primary" />
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-headline font-semibold mb-2">{item.name}</h3>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function CtaSection() {
+    return (
+        <section className="py-16 md:py-24">
+            <div className="container mx-auto px-4 md:px-6">
+                <div className="bg-primary text-primary-foreground p-12 rounded-lg text-center shadow-lg">
+                    <h2 className="text-3xl font-headline font-bold mb-4">
+                        Ready to Build the Future of Silicon?
+                    </h2>
+                    <p className="max-w-2xl mx-auto mb-8">
+                        Let's discuss how our semiconductor expertise can bring your vision to life. Contact us today for a consultation.
+                    </p>
+                    <Button size="lg" variant="secondary" asChild>
+                        <Link href="/contact">Get in Touch</Link>
+                    </Button>
+                </div>
+            </div>
+        </section>
+    );
+}
 
 export default function FeaturesPage() {
     return (
@@ -73,6 +134,8 @@ export default function FeaturesPage() {
             <Header />
             <main className="flex-1">
                 <FeaturesSection />
+                <TechSpotlightSection />
+                <CtaSection />
             </main>
             <Footer />
         </div>

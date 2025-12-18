@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
@@ -21,6 +20,8 @@ import {
 import { useFirestore, addDocumentNonBlocking } from '@/firebase';
 import { collection, serverTimestamp } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
+import { Card, CardContent } from '@/components/ui/card';
+
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -60,18 +61,18 @@ function ContactSection() {
 
 
     return (
-      <section id="contact" className="py-16 md:py-24 pt-32 md:pt-40 bg-card">
+      <section id="contact" className="py-16 md:py-24 pt-32 md:pt-40">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
               Contact Our Indian Chip Design Services Provider
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              As a global semiconductor engineering firm, we'd love to hear from you. Have a project in mind or want to learn more about our Zyron IC engineering?
+              As a global semiconductor engineering firm, we&apos;d love to hear from you. Have a project in mind or want to learn more about our Zyron IC engineering?
             </p>
           </div>
-          <div className="grid md:grid-cols-5 gap-12 max-w-6xl mx-auto">
-            <div className="md:col-span-2 space-y-8">
+          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto items-start">
+            <div className="space-y-8">
               <div className="flex items-start gap-4">
                 <div className="bg-primary/10 p-3 rounded-full mt-1">
                   <Mail className="h-6 w-6 text-primary" />
@@ -99,10 +100,10 @@ function ContactSection() {
                     Discuss your needs with an expert.
                   </p>
                   <a
-                    href="tel:+1234567890"
+                    href="tel:+919876543210"
                     className="text-primary font-medium hover:underline"
                   >
-                    +1 (234) 567-890
+                    +91 98765 43210
                   </a>
                 </div>
               </div>
@@ -118,71 +119,75 @@ function ContactSection() {
                 </div>
               </div>
             </div>
-            <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="md:col-span-3 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                 <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Your Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                 <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="your@email.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-               <FormField
-                  control={form.control}
-                  name="subject"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Subject</FormLabel>
-                      <FormControl>
-                         <Input placeholder="Project Inquiry" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Message</FormLabel>
-                      <FormControl>
-                        <Textarea
-                            placeholder="Tell us about your project..."
-                            rows={5}
-                            {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              <Button type="submit" className="w-full" size="lg" disabled={form.formState.isSubmitting}>
-                 {form.formState.isSubmitting ? 'Sending...' : 'Send Message'}
-              </Button>
-            </form>
-            </Form>
+            <Card>
+              <CardContent className="p-6">
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Your Name" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input type="email" placeholder="your@email.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <FormField
+                        control={form.control}
+                        name="subject"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Subject</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Project Inquiry" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    <FormField
+                        control={form.control}
+                        name="message"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Message</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                  placeholder="Tell us about your project..."
+                                  rows={5}
+                                  {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    <Button type="submit" className="w-full" size="lg" disabled={form.formState.isSubmitting}>
+                      {form.formState.isSubmitting ? 'Sending...' : 'Send Message'}
+                    </Button>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
