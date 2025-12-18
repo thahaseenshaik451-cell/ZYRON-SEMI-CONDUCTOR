@@ -1,0 +1,180 @@
+{
+  "entities": {
+    "ContactFormSubmission": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ContactFormSubmission",
+      "type": "object",
+      "description": "Represents a contact form submission from a potential client.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the contact form submission."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the person submitting the form."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the person submitting the form.",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number of the person submitting the form."
+        },
+        "message": {
+          "type": "string",
+          "description": "Message content from the contact form."
+        },
+        "submissionDate": {
+          "type": "string",
+          "description": "Date and time the form was submitted.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email",
+        "message",
+        "submissionDate"
+      ]
+    },
+    "Service": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Service",
+      "type": "object",
+      "description": "Represents a semiconductor design service offered by Zyron Semiconductors.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the service."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the service."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the service."
+        },
+        "icon": {
+          "type": "string",
+          "description": "URL or path to the icon representing the service."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "icon"
+      ]
+    },
+    "HomepageSection": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "HomepageSection",
+      "type": "object",
+      "description": "Represents a section on the homepage showcasing Zyron's mission, vision, or capabilities.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the homepage section."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the homepage section."
+        },
+        "content": {
+          "type": "string",
+          "description": "Content of the homepage section."
+        },
+        "order": {
+          "type": "number",
+          "description": "Order in which the section appears on the homepage."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "content",
+        "order"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/contact_form_submissions/{contactFormSubmissionId}",
+        "definition": {
+          "entityName": "ContactFormSubmission",
+          "schema": {
+            "$ref": "#/backend/entities/ContactFormSubmission"
+          },
+          "description": "Stores contact form submissions from potential clients. Accessible and manageable by admins only.",
+          "params": [
+            {
+              "name": "contactFormSubmissionId",
+              "description": "Unique identifier for the contact form submission."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/services/{serviceId}",
+        "definition": {
+          "entityName": "Service",
+          "schema": {
+            "$ref": "#/backend/entities/Service"
+          },
+          "description": "Stores details about the semiconductor design services offered by Zyron Semiconductors. Accessible and manageable by admins only.",
+          "params": [
+            {
+              "name": "serviceId",
+              "description": "Unique identifier for the service."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/homepage_sections/{homepageSectionId}",
+        "definition": {
+          "entityName": "HomepageSection",
+          "schema": {
+            "$ref": "#/backend/entities/HomepageSection"
+          },
+          "description": "Stores content sections for the homepage, showcasing Zyron's mission, vision, and capabilities. Accessible and manageable by admins only.",
+          "params": [
+            {
+              "name": "homepageSectionId",
+              "description": "Unique identifier for the homepage section."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{userId}",
+        "definition": {
+          "entityName": "roles_admin",
+          "schema": {
+            "$ref": "#/backend/entities/roles_admin"
+          },
+          "description": "Collection to store admin roles. Existence of a document indicates admin privileges.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "User ID of the admin."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "This Firestore data structure is designed to support Zyron Semiconductors' website, focusing on showcasing services, capturing contact form submissions, and managing homepage content. It emphasizes security, scalability, and maintainability by adhering to the principles of Authorization Independence, Clarity of Intent, DBAC (Database-Based Access Control), and Rules are not Filters (QAPs). \n\nAuthorization Independence is achieved by avoiding hierarchical authorization dependencies (`get()` calls in security rules). Since there are no user-specific documents requiring role-based access, Authorization Independence is inherent to the structure.\n\nStructural Segregation is applied by storing different data types (contact form submissions, services, homepage sections) in separate top-level collections, each with its own security rules.\n\nAccess Modeling uses path-based ownership where applicable. The admin panel accesses all data, and since all collections are top-level, no membership maps are required.\n\nQAPs are supported because each collection is homogeneous and has simple rules based on the admin role. There are no list operations restricted by user roles. Admins have read and write access to all collections, thus QAPs are satisfied.\n\nThe design includes separate collections for ContactFormSubmissions, Services, and HomepageSections. This segregation allows for simple and robust security rules. The admin role can be managed using the `/roles_admin/{uid}` collection, granting full access to manage the website's content and inquiries."
+  }
+}

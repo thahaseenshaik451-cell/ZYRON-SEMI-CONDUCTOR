@@ -1,0 +1,149 @@
+/**
+ * Core Philosophy:
+ * This ruleset implements a Role-Based Access Control (RBAC) model centered around a
+ * designated 'admin' role. The primary goal is to secure a content-managed website where
+ * public-facing content is readable by anyone, but all content creation, modification,
+ * and deletion are restricted to authorized administrators. Sensitive data, such as
+ * contact form submissions, is strictly confidential and accessible only to admins.
+ *
+ * Data Structure:
+ * The data is organized into flat, top-level collections, which simplifies rule logic
+ * and enhances query performance.
+ * - `/services/{serviceId}`: Publicly readable content.
+ * - `/homepage_sections/{sectionId}`: Publicly readable content.
+ * - `/contact_form_submissions/{submissionId}`: Private data, write-only for the public, read-only for admins.
+ * - `/roles_admin/{userId}`: A lookup collection where the existence of a document
+ *   `roles_admin/{uid}` grants administrative privileges to the user with that UID.
+ *
+ * Key Security Decisions:
+ * - Admin Privilege via Document Existence: A user is considered an admin if a document
+ *   with their UID exists in the `/roles_admin` collection. This is a simple and
+ *   performant way to manage roles.
+ * - Public Read, Admin Write: Collections intended for public display (`services`,
+ *   `homepage_sections`) allow unrestricted read access (`get`, `list`) for all users,
+ *   including unauthenticated visitors. All write operations are strictly limited to admins.
+ * - Write-Only for Public, Read-Only for Admins: The `contact_form_submissions` collection
+ *   is configured to allow anyone to create a document (submit the form), but only admins
+ *   can read or manage these submissions after they are created.
+ * - Admin Self-Management: The `/roles_admin` collection is locked down so that only
+ *   existing admins can add or remove other admins, preventing unauthorized privilege escalation.
+ *
+ * Denormalization for Authorization:
+ * This ruleset uses a dedicated `/roles_admin` collection for authorization checks.
+ * This is a form of Database-Based Access Control (DBAC). A single `exists()` call
+ * to this collection is highly performant and avoids the need to denormalize an `isAdmin`
+ * flag onto every single document in the database, making the security model clean and
+ * easy to maintain.
+ *
+ * Structural Segregation:
+ * The ruleset leverages structural segregation effectively. Public content (`services`)
+ * is in a separate collection from sensitive, user-submitted data
+ * (`contact_form_submissions`). This separation allows for distinct and simple security
+ * rules for each collection, preventing accidental data leakage.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ------------------------------------------------------------------------
+    // Helper Functions
+    // ------------------------------------------------------------------------
+
+    /**
+     * Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the authenticated user has an admin role.
+     * An admin is defined by the existence of a document in the /roles_admin collection
+     * with the user's UID as the document ID.
+     */
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+    }
+    
+    /**
+     * Checks if a document already exists.
+     * This is a critical check for all update and delete operations to prevent
+     * acting on non-existent data.
+     */
+    function isExistingDoc() {
+      return resource != null;
+    }
+
+    // ------------------------------------------------------------------------
+    // Collection Rules
+    // ------------------------------------------------------------------------
+
+    /**
+     * @description Stores contact form submissions. Anyone can create (submit) a form, but only admins can read or manage them.
+     * @path /contact_form_submissions/{contactFormSubmissionId}
+     * @allow (create) An anonymous visitor submits the contact form.
+     * @allow (get) An admin reads a specific form submission to follow up.
+     * @deny (get) A regular signed-in user tries to read another user's submission.
+     * @deny (list) A non-admin user tries to list all submissions.
+     * @principle Segregates public write access from private read access. Protects sensitive user-submitted data.
+     */
+    match /contact_form_submissions/{contactFormSubmissionId} {
+      allow get: if isAdmin();
+      allow list: if isAdmin();
+      allow create: if true;
+      allow update: if false; // Submissions are immutable.
+      allow delete: if isAdmin() && isExistingDoc();
+    }
+
+    /**
+     * @description Defines the services offered. This content is public for all visitors, but only manageable by admins.
+     * @path /services/{serviceId}
+     * @allow (get, list) An anonymous visitor reads the list of services on the website.
+     * @allow (create) An admin adds a new service offering through the admin panel.
+     * @deny (update) A regular signed-in user attempts to change a service description.
+     * @deny (delete) A non-admin user tries to delete a service.
+     * @principle Enforces public read access for website content while restricting all write operations to administrators.
+     */
+    match /services/{serviceId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin() && isExistingDoc();
+      allow delete: if isAdmin() && isExistingDoc();
+    }
+
+    /**
+     * @description Manages content sections for the homepage. Publicly visible, but only editable by admins.
+     * @path /homepage_sections/{homepageSectionId}
+     * @allow (list) The website's frontend fetches all homepage sections to render the page for a public visitor.
+     * @allow (update) An admin updates the text in the "Our Mission" section via the admin panel.
+     * @deny (create) A signed-in, non-admin user tries to add a new section to the homepage.
+     * @deny (delete) Any user without an admin role attempts to remove a section.
+     * @principle Enforces public read access for website content while restricting all write operations to administrators.
+     */
+    match /homepage_sections/{homepageSectionId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin() && isExistingDoc();
+      allow delete: if isAdmin() && isExistingDoc();
+    }
+
+    /**
+     * @description Manages admin role assignments. Only existing admins can view or manage other admins.
+     * @path /roles_admin/{userId}
+     * @allow (create) An existing admin grants admin privileges to a new user.
+     * @allow (list) An admin views the list of all current administrators in the admin panel.
+     * @deny (create) A non-admin user tries to make themselves an admin.
+     * @deny (list) A regular user attempts to see who the admins are.
+     * @principle Protects the integrity of the RBAC system by ensuring only admins can manage administrative roles.
+     */
+    match /roles_admin/{userId} {
+      allow get: if isAdmin();
+      allow list: if isAdmin();
+      allow create: if isAdmin();
+      allow update: if isAdmin() && isExistingDoc();
+      allow delete: if isAdmin() && isExistingDoc();
+    }
+  }
+}
