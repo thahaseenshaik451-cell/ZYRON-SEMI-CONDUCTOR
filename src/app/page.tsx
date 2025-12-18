@@ -43,11 +43,10 @@ function HeroSection() {
       <div className="relative z-10 p-4 max-w-4xl mx-auto">
         <div className="animate-in fade-in slide-in-from-top-8 duration-1000">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-headline font-bold tracking-tight mb-4 drop-shadow-lg">
-            Engineering the Future of Semiconductors
+            Zyron: Your Reliable Semiconductor Design Partner
           </h1>
-          <p className="text-lg md:text-xl text-neutral-200 max-w-2xl mx-auto mb-8 drop-shadow">
-            Zyron is at the forefront of semiconductor innovation, delivering
-            custom chip solutions that power the next generation of technology.
+          <p className="text-lg md:text-xl text-neutral-200 max-w-3xl mx-auto mb-8 drop-shadow">
+            As a leading semiconductor design company, Zyron offers advanced semiconductor solutions and custom chip design services. We are a professional chip design firm focused on quality-driven IC design and development.
           </p>
           <div className="flex gap-4 justify-center">
             <Button size="lg" asChild>
@@ -66,25 +65,25 @@ function HeroSection() {
 const services = [
   {
     icon: Cpu,
-    title: 'Custom Chip Architecture',
+    title: 'Custom Chip Architecture Design',
     description:
       'Designing bespoke chip architectures from the ground up to meet your unique performance, power, and cost requirements.',
   },
   {
     icon: Binary,
-    title: 'RTL & Logic Design',
+    title: 'RTL & Logic Design Services',
     description:
       'Expert RTL coding and logic design to translate your architectural specifications into efficient, high-performance hardware.',
   },
   {
     icon: ShieldCheck,
-    title: 'Verification & Validation',
+    title: 'Semiconductor Verification Solutions',
     description:
-      'Rigorous verification and validation processes to ensure your design is robust, reliable, and free of functional flaws.',
+      'Rigorous verification and validation processes to ensure your design is robust, reliable, and provides silicon-ready design services.',
   },
   {
     icon: Layers3,
-    title: 'Micro-Architecture Development',
+    title: 'Micro-Architecture Development Services',
     description:
       'Detailed micro-architecture development to optimize data paths, control logic, and memory subsystems for peak efficiency.',
   },
@@ -96,7 +95,7 @@ const services = [
   },
   {
     icon: Cpu,
-    title: "System-on-Chip (SoC) Integration",
+    title: "End-to-End Semiconductor Design",
     description: "Seamlessly integrating multiple components into a single, powerful SoC to reduce form factor and improve performance."
   }
 ];
@@ -107,11 +106,10 @@ function ServicesSection() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
-            Comprehensive Design Services
+            High-Quality Semiconductor Engineering Support
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            From concept to silicon, we provide end-to-end semiconductor design
-            expertise.
+            From concept to silicon, we provide end-to-end IC design and verification services. Our scalable and reliable chip design solutions are cost-effective for startups and enterprises.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -154,7 +152,7 @@ function AboutSection() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="animate-in fade-in slide-in-from-left-8 duration-1000">
             <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
-              Pioneering Semiconductor Innovation
+              A Quality-Focused Semiconductor Company
             </h2>
             <div className="mt-6 space-y-6 text-muted-foreground">
               <div>
@@ -164,7 +162,7 @@ function AboutSection() {
                 <p>
                   To empower our clients with state-of-the-art semiconductor
                   solutions that push the boundaries of technology, driving
-                  progress and creating a smarter, more connected world.
+                  progress and creating a smarter, more connected world through precision-driven chip engineering.
                 </p>
               </div>
               <div>
@@ -172,9 +170,7 @@ function AboutSection() {
                   Our Vision
                 </h3>
                 <p>
-                  To be the world&apos;s most trusted partner in custom silicon
-                  design, recognized for our unwavering commitment to
-                  innovation, quality, and customer success.
+                  To be the world&apos;s most trusted, customer-centric semiconductor services partner, recognized for our unwavering commitment to innovation, quality, and global standard chip development.
                 </p>
               </div>
             </div>
@@ -204,11 +200,10 @@ function ContactSection() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
-            Get in Touch
+            Contact Our Indian Semiconductor Engineering Firm
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Have a project in mind or want to learn more? We&apos;d love to hear
-            from you.
+            As a global semiconductor services provider, we'd love to hear from you. Have a project in mind or want to learn more?
           </p>
         </div>
         <div className="grid md:grid-cols-5 gap-12 max-w-6xl mx-auto">
@@ -254,7 +249,7 @@ function ContactSection() {
               <div>
                 <h3 className="font-semibold text-lg">Office</h3>
                 <p className="text-muted-foreground">
-                  123 Innovation Drive, Silicon Valley, CA 94000
+                  123 Innovation Drive, Bangalore, India
                 </p>
               </div>
             </div>
