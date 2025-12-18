@@ -3,6 +3,10 @@
 import {
   type LucideIcon,
   HelpCircle,
+  Search,
+  ClipboardList,
+  ShieldCheck,
+  Cpu
 } from 'lucide-react';
 import {
   Card,
@@ -100,25 +104,25 @@ function ProcessSection() {
             step: "01",
             title: "Discovery & Planning",
             description: "We work with you to understand your requirements, challenges, and goals, creating a detailed project roadmap.",
-            icon: LucideIcons.Search,
+            icon: Search,
         },
         {
             step: "02",
             title: "Architecture & Design",
             description: "Our experts design a robust and scalable chip architecture tailored to your specific needs.",
-            icon: LucideIcons.Architecture,
+            icon: ClipboardList,
         },
         {
             step: "03",
             title: "Verification & Validation",
             description: "Rigorous testing at every stage ensures a flawless final product that meets all specifications.",
-            icon: LucideIcons.ShieldCheck,
+            icon: ShieldCheck,
         },
         {
             step: "04",
             title: "Silicon Delivery",
             description: "We manage the entire process through to tape-out and delivery of high-quality silicon.",
-            icon: LucideIcons.Cpu,
+            icon: Cpu,
         },
     ];
 
