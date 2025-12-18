@@ -43,14 +43,14 @@ function HeroSection() {
       <div className="relative z-10 p-4 max-w-4xl mx-auto">
         <div className="animate-in fade-in slide-in-from-top-8 duration-1000">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-headline font-bold tracking-tight mb-4 drop-shadow-lg">
-            Zyron: Your Reliable Semiconductor Design Partner
+            Your Reliable Semiconductor Design Partner
           </h1>
           <p className="text-lg md:text-xl text-neutral-200 max-w-3xl mx-auto mb-8 drop-shadow">
-            As a leading semiconductor design company, Zyron offers advanced semiconductor solutions and custom chip design services. We are a professional chip design firm focused on quality-driven IC design and development.
+            Delivering advanced semiconductor engineering and high-performance chip development. Our quality-driven silicon engineering provides next-generation, global-ready semiconductor solutions.
           </p>
           <div className="flex gap-4 justify-center">
             <Button size="lg" asChild>
-              <Link href="#services">Our Services</Link>
+              <Link href="#services">Our Chip Design Services</Link>
             </Button>
             <Button size="lg" variant="secondary" asChild>
               <Link href="#contact">Contact Us</Link>
@@ -65,38 +65,38 @@ function HeroSection() {
 const services = [
   {
     icon: Cpu,
-    title: 'Custom Chip Architecture Design',
+    title: 'Custom Chip Architecture Services',
     description:
       'Designing bespoke chip architectures from the ground up to meet your unique performance, power, and cost requirements.',
   },
   {
     icon: Binary,
-    title: 'RTL & Logic Design Services',
+    title: 'RTL and Logic Design Expertise',
     description:
       'Expert RTL coding and logic design to translate your architectural specifications into efficient, high-performance hardware.',
   },
   {
     icon: ShieldCheck,
-    title: 'Semiconductor Verification Solutions',
+    title: 'Semiconductor Verification Engineering',
     description:
       'Rigorous verification and validation processes to ensure your design is robust, reliable, and provides silicon-ready design services.',
   },
   {
     icon: Layers3,
-    title: 'Micro-Architecture Development Services',
+    title: 'Custom Integrated Circuit Development',
     description:
       'Detailed micro-architecture development to optimize data paths, control logic, and memory subsystems for peak efficiency.',
   },
   {
     icon: Cog,
-    title: 'Physical Design & Optimization',
+    title: 'Physical Design Optimization Solutions',
     description:
       'Advanced physical design techniques, from floorplanning to tape-out, to optimize for area, timing, and power consumption.',
   },
   {
-    icon: Cpu,
-    title: "End-to-End Semiconductor Design",
-    description: "Seamlessly integrating multiple components into a single, powerful SoC to reduce form factor and improve performance."
+    icon: Check,
+    title: "Silicon Validation and Testing Services",
+    description: "Comprehensive silicon validation and testing to ensure functionality, performance, and reliability for scalable IC design."
   }
 ];
 
@@ -106,10 +106,10 @@ function ServicesSection() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
-            High-Quality Semiconductor Engineering Support
+            End-to-End Semiconductor Design Services
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            From concept to silicon, we provide end-to-end IC design and verification services. Our scalable and reliable chip design solutions are cost-effective for startups and enterprises.
+            From concept to silicon, we provide cost-efficient custom chip development and scalable IC design for modern applications. Our services are tailored for startups and enterprises alike.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -139,10 +139,10 @@ function ServicesSection() {
 
 function AboutSection() {
   const capabilities = [
-    'Next-Gen SoC Design',
-    'AI/ML Hardware Acceleration',
-    'Low-Power IoT Solutions',
-    'High-Performance Computing',
+    'Next-Generation Silicon Solutions',
+    'AI-Enabled Silicon Development',
+    'Low-Power Semiconductor Solutions',
+    'High-Performance Chip Development',
     'Advanced Verification Methodologies',
   ];
 
@@ -152,7 +152,7 @@ function AboutSection() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="animate-in fade-in slide-in-from-left-8 duration-1000">
             <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
-              A Quality-Focused Semiconductor Company
+              A Customer-Focused Chip Design Company
             </h2>
             <div className="mt-6 space-y-6 text-muted-foreground">
               <div>
@@ -160,9 +160,7 @@ function AboutSection() {
                   Our Mission
                 </h3>
                 <p>
-                  To empower our clients with state-of-the-art semiconductor
-                  solutions that push the boundaries of technology, driving
-                  progress and creating a smarter, more connected world through precision-driven chip engineering.
+                  To empower our clients with industry-standard semiconductor services that push the boundaries of technology, driving progress and creating a smarter, more connected world through precision-driven chip engineering.
                 </p>
               </div>
               <div>
@@ -170,7 +168,7 @@ function AboutSection() {
                   Our Vision
                 </h3>
                 <p>
-                  To be the world&apos;s most trusted, customer-centric semiconductor services partner, recognized for our unwavering commitment to innovation, quality, and global standard chip development.
+                  To be the world&apos;s most trusted partner for professional silicon design and validation, recognized for our unwavering commitment to innovation and quality for startups and enterprises.
                 </p>
               </div>
             </div>
@@ -200,10 +198,10 @@ function ContactSection() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">
-            Contact Our Indian Semiconductor Engineering Firm
+            Contact Our Indian Chip Design Services Provider
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            As a global semiconductor services provider, we'd love to hear from you. Have a project in mind or want to learn more?
+            As a global semiconductor engineering firm, we'd love to hear from you. Have a project in mind or want to learn more about our Zyron IC engineering?
           </p>
         </div>
         <div className="grid md:grid-cols-5 gap-12 max-w-6xl mx-auto">
