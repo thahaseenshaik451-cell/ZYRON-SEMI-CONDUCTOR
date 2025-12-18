@@ -9,7 +9,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <Logo />
           <p className="text-sm text-muted-foreground order-last md:order-none">
-            © {new Date().getFullYear()} Zyron Semi Conductors. All rights reserved.
+            © {new Date().getFullYear()} ZYRON SEMI CONDUCTORS. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Twitter">

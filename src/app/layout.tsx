@@ -17,7 +17,7 @@ const fontPoppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Zyron Semi Conductors | Advanced Semiconductor & Chip Design Solutions',
+  title: 'ZYRON SEMI CONDUCTORS | Advanced Semiconductor & Chip Design Solutions',
   description: 'Your reliable semiconductor design partner for next-generation silicon solutions and high-performance chip development. We deliver quality-driven silicon engineering.',
 };
 
