@@ -24,14 +24,32 @@ export function Header() {
   }, []);
 
   const navLinks = [
-    { href: '/', label: 'Home' },
+    { href: '/#home', label: 'Home' },
+    { href: '/#services', label: 'Services' },
+    { href: '/#features', label: 'Features' },
+    { href: '/#contact', label: 'Contact' },
     { href: '/about', label: 'About' },
-    { href: '/services', label: 'Services' },
-    { href: '/features', label: 'Features' },
-    { href: '/contact', label: 'Contact' },
   ];
 
-  const headerIsTransparent = pathname === '/' && !hasScrolled;
+  const headerIsTransparent = (pathname === '/' || pathname.startsWith('/#')) && !hasScrolled;
+
+  const isLinkActive = (href: string) => {
+    if (pathname === '/' && href === '/#home') return true;
+    if (href.includes('#')) {
+        const [path, hash] = href.split('#');
+        if (path === '' || path === '/') {
+            // It's an anchor on the homepage
+            if(pathname === '/') {
+                // We're on the homepage, check hash later
+            } else {
+                return false;
+            }
+        } else if (pathname !== path) {
+            return false;
+        }
+    }
+    return pathname === href;
+  }
 
   return (
     <header className={cn(
@@ -44,7 +62,7 @@ export function Header() {
           {navLinks.map(link => (
             <Link key={link.href} href={link.href} className={cn(
               "transition-colors",
-              pathname === link.href ? "text-primary font-semibold" : "text-foreground/80 hover:text-foreground"
+              isLinkActive(link.href) ? "text-primary font-semibold" : "text-foreground/80 hover:text-foreground"
               )}>
               {link.label}
             </Link>
@@ -52,7 +70,7 @@ export function Header() {
         </nav>
         <div className="hidden md:block">
           <Button asChild>
-            <Link href="/contact">Get Started</Link>
+            <Link href="/#contact">Get Started</Link>
           </Button>
         </div>
         <div className="md:hidden">
@@ -75,14 +93,14 @@ export function Header() {
                   {navLinks.map(link => (
                     <Link key={link.href} href={link.href} className={cn(
                         "transition-colors",
-                        pathname === link.href ? "text-primary font-semibold" : "text-foreground/80 hover:text-foreground"
+                        isLinkActive(link.href) ? "text-primary font-semibold" : "text-foreground/80 hover:text-foreground"
                       )} onClick={() => setMobileMenuOpen(false)}>
                       {link.label}
                     </Link>
                   ))}
                 </nav>
                 <Button asChild className="mt-auto">
-                  <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
+                  <Link href="/#contact" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
                 </Button>
               </div>
             </SheetContent>
