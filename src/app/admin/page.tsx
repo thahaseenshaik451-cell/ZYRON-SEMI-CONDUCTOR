@@ -49,6 +49,8 @@ type Service = {
   name: string;
   description: string;
   icon: string;
+  imageUrl: string;
+  imageHint: string;
 };
 
 const navLinks = [
@@ -102,10 +104,12 @@ function ServiceForm({ service, onSave, onOpenChange }: { service?: Service | nu
     const [name, setName] = useState(service?.name || '');
     const [description, setDescription] = useState(service?.description || '');
     const [icon, setIcon] = useState(service?.icon || '');
+    const [imageUrl, setImageUrl] = useState(service?.imageUrl || 'https://picsum.photos/seed/service1/600/400');
+    const [imageHint, setImageHint] = useState(service?.imageHint || 'abstract technology');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSave({ name, description, icon });
+        onSave({ name, description, icon, imageUrl, imageHint });
     };
 
     return (
@@ -128,6 +132,14 @@ function ServiceForm({ service, onSave, onOpenChange }: { service?: Service | nu
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="icon" className="text-right">Icon</Label>
                     <Input id="icon" value={icon} onChange={(e) => setIcon(e.target.value)} className="col-span-3" placeholder="e.g., Cpu" />
+                </div>
+                 <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="imageUrl" className="text-right">Image URL</Label>
+                    <Input id="imageUrl" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className="col-span-3" placeholder="https://picsum.photos/seed/service1/600/400" />
+                </div>
+                 <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="imageHint" className="text-right">Image Hint</Label>
+                    <Input id="imageHint" value={imageHint} onChange={(e) => setImageHint(e.target.value)} className="col-span-3" placeholder="e.g., abstract technology" />
                 </div>
             </div>
             <DialogFooter>

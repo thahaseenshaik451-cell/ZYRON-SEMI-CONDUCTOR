@@ -61,14 +61,25 @@
         },
         "icon": {
           "type": "string",
-          "description": "URL or path to the icon representing the service."
+          "description": "Name of the lucide-react icon representing the service."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL for the service's representative image.",
+          "format": "uri"
+        },
+        "imageHint": {
+          "type": "string",
+          "description": "A hint for AI to find a better image, e.g., 'circuit board'."
         }
       },
       "required": [
         "id",
         "name",
         "description",
-        "icon"
+        "icon",
+        "imageUrl",
+        "imageHint"
       ]
     },
     "HomepageSection": {

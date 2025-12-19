@@ -28,6 +28,8 @@ type Service = {
   name: string;
   description: string;
   icon: string;
+  imageUrl: string;
+  imageHint: string;
 };
 
 const iconMap: { [key: string]: LucideIcon } = {
@@ -103,36 +105,37 @@ function ServicesSection() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {isLoading && Array.from({ length: 6 }).map((_, index) => (
-             <Card key={index} className="flex flex-col text-center items-center p-8 bg-background">
-                <div className="mb-4 bg-primary/10 p-4 rounded-full">
-                    <div className="h-8 w-8 bg-gray-300 rounded-full animate-pulse" />
+             <Card key={index} className="flex flex-col text-center items-center bg-background overflow-hidden">
+                <div className="h-48 w-full bg-gray-300 animate-pulse" />
+                <div className="p-6 w-full">
+                  <div className="h-6 w-48 bg-gray-300 rounded animate-pulse mx-auto" />
+                  <div className="h-4 w-full bg-gray-300 rounded animate-pulse mt-4" />
+                  <div className="h-4 w-3/4 bg-gray-300 rounded animate-pulse mt-2 mx-auto" />
                 </div>
-                <CardHeader className="p-0">
-                    <div className="h-6 w-48 bg-gray-300 rounded animate-pulse" />
-                </CardHeader>
-                <CardContent className="p-0 mt-2 flex-grow">
-                    <div className="h-4 w-full bg-gray-300 rounded animate-pulse mt-2" />
-                    <div className="h-4 w-3/4 bg-gray-300 rounded animate-pulse mt-2" />
-                </CardContent>
              </Card>
         ))}
           {services?.map((service) => {
-            const Icon = getIcon(service.icon);
             return (
                 <Card
                 key={service.id}
-                className="flex flex-col text-center items-center p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 bg-background"
+                className="flex flex-col text-center items-center transition-all duration-300 hover:shadow-xl hover:-translate-y-2 bg-background overflow-hidden"
                 >
-                <div className="mb-4 bg-primary/10 p-4 rounded-full">
-                    <Icon className="h-8 w-8 text-primary" />
+                <div className="relative h-48 w-full">
+                  <Image 
+                    src={service.imageUrl} 
+                    alt={service.name} 
+                    fill 
+                    className="object-cover"
+                    data-ai-hint={service.imageHint}
+                  />
                 </div>
-                <CardHeader className="p-0">
+                <CardHeader className="p-6 pb-2 w-full">
                     <CardTitle className="font-headline text-xl">
                     {service.name}
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="p-0 mt-2 flex-grow">
-                    <p className="text-muted-foreground">{service.description}</p>
+                <CardContent className="p-6 pt-0 flex-grow w-full">
+                    <p className="text-muted-foreground text-sm">{service.description}</p>
                 </CardContent>
                 </Card>
             )
