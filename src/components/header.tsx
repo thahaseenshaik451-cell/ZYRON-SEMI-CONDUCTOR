@@ -54,17 +54,17 @@ export function Header() {
   return (
     <header className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      headerIsTransparent ? "bg-transparent text-white" : "bg-card/95 shadow-md backdrop-blur-sm text-foreground"
+      headerIsTransparent ? "bg-transparent" : "bg-card/95 shadow-md backdrop-blur-sm"
     )}>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Logo />
+        <Logo isTransparent={headerIsTransparent} />
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map(link => (
             <Link key={link.href} href={link.href} className={cn(
-              "transition-colors pb-1 border-b-2",
+              "transition-colors pb-1 border-b-2 font-semibold",
               isLinkActive(link.href) 
-                ? "border-primary text-primary font-bold" 
-                : "border-transparent text-current/70 hover:text-primary"
+                ? "border-primary text-primary" 
+                : headerIsTransparent ? "border-transparent text-white/80 hover:text-white" : "border-transparent text-foreground/70 hover:text-foreground"
               )}>
               {link.label}
             </Link>
@@ -78,7 +78,7 @@ export function Header() {
         <div className="md:hidden">
           <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className={cn(headerIsTransparent && "text-white hover:text-white hover:bg-white/10")}>
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open Menu</span>
               </Button>
