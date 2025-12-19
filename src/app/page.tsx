@@ -151,71 +151,76 @@ function ProcessSection() {
         {
             step: "01",
             title: "Discovery & Planning",
-            description: "We work with you to understand your requirements, challenges, and goals, creating a detailed project roadmap.",
+            description: "We begin with a deep dive into your vision. Our team collaborates with you to define project specifications, technical requirements, and performance targets to create a detailed project roadmap for your custom silicon.",
             icon: Search,
+            imageUrl: "https://picsum.photos/seed/process1/600/400",
+            imageHint: "blueprint microchip",
         },
         {
             step: "02",
             title: "Architecture & Design",
-            description: "Our experts design a robust and scalable chip architecture tailored to your specific needs.",
+            description: "Using advanced methodologies, our experts design a robust and scalable chip architecture. We focus on optimizing for power, performance, and area (PPA) to ensure the design is tailored to your specific application needs.",
             icon: ClipboardList,
+            imageUrl: "https://picsum.photos/seed/process2/600/400",
+            imageHint: "processor design",
         },
         {
             step: "03",
             title: "Verification & Validation",
-            description: "Rigorous testing at every stage ensures a flawless final product that meets all specifications.",
+            description: "Rigorous verification and validation are at the core of our process. We employ industry-leading simulation and emulation techniques to test at every stage, ensuring a functionally correct and flawless final product.",
             icon: ShieldCheck,
+            imageUrl: "https://picsum.photos/seed/process3/600/400",
+            imageHint: "circuit board testing",
         },
         {
             step: "04",
-            title: "Silicon Delivery",
-            description: "We manage the entire process through to tape-out and delivery of high-quality silicon.",
+            title: "Silicon Delivery & Support",
+            description: "We manage the entire backend process, from tape-out to fabrication and packaging. Our commitment extends to post-silicon bring-up and support to ensure a smooth integration into your end product.",
             icon: Cpu,
+            imageUrl: "https://picsum.photos/seed/process4/600/400",
+            imageHint: "finished microchip",
         },
     ];
 
     return (
         <section id="process" className="py-16 md:py-24 bg-background">
             <div className="container mx-auto px-4 md:px-6">
-                <div className="text-center max-w-3xl mx-auto mb-12">
-                    <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-foreground">Our Proven Process</h2>
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                    <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-foreground">Our Proven Process for Chip Excellence</h2>
                     <p className="mt-4 text-lg text-muted-foreground">
-                        A streamlined workflow for efficient, transparent, and successful project delivery.
+                        From initial concept to final silicon, we follow a meticulous, transparent, and collaborative process to ensure project success and deliver market-leading semiconductor solutions.
                     </p>
                 </div>
-                <div className="relative">
-                    <div className="hidden md:block absolute left-1/2 top-8 bottom-8 w-px bg-border -translate-x-1/2"></div>
-                    <div className="space-y-12 md:space-y-0">
-                        {processSteps.map((item, index) => {
-                             const isEven = index % 2 === 0;
-                             const Icon = item.icon;
-                             return (
-                                <div key={item.step} className={`flex flex-col md:flex-row items-center gap-8 ${isEven ? '' : 'md:flex-row-reverse'}`}>
-                                    <div className="md:w-5/12">
-                                        <div className="bg-card p-6 rounded-lg shadow-sm">
-                                            <div className="flex items-center gap-4">
-                                                <div className="bg-primary/10 p-3 rounded-full">
-                                                    <Icon className="h-6 w-6 text-primary" />
-                                                </div>
-                                                <h3 className="font-headline text-2xl font-bold">{item.title}</h3>
-                                            </div>
-                                            <p className="mt-3 text-muted-foreground">{item.description}</p>
-                                        </div>
-                                    </div>
-                                    <div className="relative flex-shrink-0">
-                                         <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-2xl shadow-lg">
+                <div className="grid md:grid-cols-2 gap-x-12 gap-y-16 items-center">
+                    {processSteps.map((item) => {
+                         const Icon = item.icon;
+                         return (
+                            <div key={item.step} className="flex flex-col md:flex-row items-start gap-6">
+                               <div className="relative w-full md:w-2/5 rounded-lg overflow-hidden aspect-video">
+                                    <Image
+                                        src={item.imageUrl}
+                                        alt={item.title}
+                                        fill
+                                        data-ai-hint={item.imageHint}
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="md:w-3/5">
+                                    <div className="flex items-center gap-4 mb-3">
+                                         <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl shadow-lg flex-shrink-0">
                                             {item.step}
                                         </div>
+                                        <h3 className="font-headline text-2xl font-bold">{item.title}</h3>
                                     </div>
-                                    <div className="md:w-5/12 hidden md:block"></div>
+                                    <p className="text-muted-foreground">{item.description}</p>
                                 </div>
-                             )
-                        })}
-                    </div>
+                            </div>
+                         )
+                    })}
                 </div>
                  <div className="text-center mt-16">
                     <Button asChild size="lg">
-                        <Link href="#contact">Start Your Project</Link>
+                        <Link href="#contact">Start Your Project With Us</Link>
                     </Button>
                  </div>
             </div>
