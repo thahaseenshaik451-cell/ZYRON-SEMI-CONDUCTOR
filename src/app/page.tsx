@@ -47,7 +47,7 @@ function HeroSection() {
       <div className="absolute inset-0 bg-slate-900/60" />
       <div className="relative z-10 p-4 max-w-4xl mx-auto">
         <div className="animate-in fade-in slide-in-from-top-8 duration-1000">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-headline font-bold tracking-tight mb-4 drop-shadow-lg">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-headline font-bold tracking-tight mb-4 drop-shadow-lg text-white">
             Your Reliable Semiconductor Design Partner
           </h1>
           <p className="text-lg md:text-xl text-neutral-200 max-w-3xl mx-auto mb-8 drop-shadow">
@@ -76,7 +76,7 @@ function ServicesPreview() {
       <section id="services-preview" className="py-16 md:py-24 bg-card">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-primary">
+            <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-foreground">
               End-to-End Semiconductor Design Services
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
@@ -153,7 +153,7 @@ function ServicesPreview() {
         <section className="py-16 md:py-24">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center max-w-3xl mx-auto mb-12">
-                    <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-primary">
+                    <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-foreground">
                         Why Partner with Zyron?
                     </h2>
                     <p className="mt-4 text-lg text-muted-foreground">

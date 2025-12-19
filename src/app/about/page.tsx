@@ -20,7 +20,7 @@ function AboutSection() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-in fade-in slide-in-from-left-8 duration-1000">
-              <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-primary">
+              <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-foreground">
                 A Customer-Focused Chip Design Company
               </h2>
               <div className="mt-6 space-y-6 text-muted-foreground">
@@ -90,7 +90,7 @@ function TeamSection() {
     <section id="team" className="py-16 md:py-24 bg-card">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-primary">
+          <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-foreground">
             Meet Our Leadership Team
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
