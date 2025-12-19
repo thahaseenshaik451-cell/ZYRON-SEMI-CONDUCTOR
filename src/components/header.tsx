@@ -54,15 +54,17 @@ export function Header() {
   return (
     <header className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      headerIsTransparent ? "bg-transparent" : "bg-card/95 shadow-md backdrop-blur-sm"
+      headerIsTransparent ? "bg-transparent text-white" : "bg-card/95 shadow-md backdrop-blur-sm text-foreground"
     )}>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Logo />
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map(link => (
             <Link key={link.href} href={link.href} className={cn(
-              "transition-colors",
-              isLinkActive(link.href) ? "text-primary font-semibold" : "text-foreground/80 hover:text-foreground"
+              "transition-colors pb-1 border-b-2",
+              isLinkActive(link.href) 
+                ? "border-primary text-primary font-bold" 
+                : "border-transparent text-current/70 hover:text-primary"
               )}>
               {link.label}
             </Link>
@@ -93,7 +95,7 @@ export function Header() {
                   {navLinks.map(link => (
                     <Link key={link.href} href={link.href} className={cn(
                         "transition-colors",
-                        isLinkActive(link.href) ? "text-primary font-semibold" : "text-foreground/80 hover:text-foreground"
+                        isLinkActive(link.href) ? "text-primary font-semibold" : "text-foreground/80 hover:text-primary"
                       )} onClick={() => setMobileMenuOpen(false)}>
                       {link.label}
                     </Link>
