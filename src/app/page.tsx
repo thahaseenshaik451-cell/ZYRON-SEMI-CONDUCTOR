@@ -370,10 +370,10 @@ function ContactSection() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-foreground">
-              Contact Our Indian Chip Design Services Provider
+              Contact Our Services Provider
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              As a global semiconductor engineering firm, we&apos;d love to hear from you. Have a project in mind or want to learn more about our Zyron IC engineering?
+              As a global semiconductor engineering firm, we&apos;d love to hear from you. Have a project in mind or want to learn more about our IC engineering?
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto items-start">
